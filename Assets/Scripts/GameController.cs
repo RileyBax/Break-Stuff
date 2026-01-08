@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.AssemblyQualifiedNameParser;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -12,6 +14,8 @@ public class GameController : MonoBehaviour
     [Range(0.0f, 10.0f)]
     public float fMulti = 1.5f;
     public Sprite[] sprites;
+    public int score = 0;
+    public TextMeshProUGUI scoreText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -83,6 +87,14 @@ public class GameController : MonoBehaviour
             eggRB.linearVelocity *= new Vector2(0.999f, 0.999f);
 
         }
+
+    }
+
+    void addScore(int amount)
+    {
+        
+        score += amount;
+        scoreText.text = score.ToString();
 
     }
 }

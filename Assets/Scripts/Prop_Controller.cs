@@ -8,6 +8,8 @@ public class Egg_Controller : MonoBehaviour
     public Rigidbody2D propRB;
     private UnityEngine.Vector2 prevVel;
     protected Explodable explodeable;
+    public GameObject coin;
+    private bool coinSpawned = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,8 +37,16 @@ public class Egg_Controller : MonoBehaviour
         
         if(prevVel.magnitude > 5.0f) {
 
+            if (!coinSpawned)
+            {
+                
+                Instantiate(coin).transform.position = transform.position;
+                coinSpawned = true;
+
+            }
+
             explodeable.explode(prevVel);
-            
+
         }
 
     }

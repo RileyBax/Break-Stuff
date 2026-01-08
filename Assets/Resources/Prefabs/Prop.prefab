@@ -849,6 +849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   propRB: {fileID: 0}
+  coin: {fileID: 1082887098648623800, guid: 357cafb35b363af439c96182ce8fc224, type: 3}
 --- !u!114 &882215188072257440
 MonoBehaviour:
   m_ObjectHideFlags: 0
