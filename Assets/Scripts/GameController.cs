@@ -11,7 +11,6 @@ public class GameController : MonoBehaviour
     public GameObject egg;
     Rigidbody2D eggRB;
     GameObject eggObject;
-    [Range(0.0f, 10.0f)]
     public float fMulti = 1.5f;
     public Sprite[] sprites;
     public int score = 0;

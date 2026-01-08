@@ -1,3 +1,4 @@
+using Delaunay.Geo;
 using UnityEngine;
 
 public class FragCount : MonoBehaviour
@@ -19,7 +20,9 @@ public class FragCount : MonoBehaviour
         
         if(timer <= maxTime) {
 
-            if(timer >= maxTime / 2) mr.materials[0].color = new Color(mr.materials[0].color.r, mr.materials[0].color.b, mr.materials[0].color.g, (maxTime - timer) / maxTime);
+            if(timer >= maxTime / 2){
+                mr.materials[0].color = new Color(mr.materials[0].color.r, mr.materials[0].color.b, mr.materials[0].color.g, (maxTime - timer) / maxTime);
+            }
 
             timer += Time.deltaTime;
         }
@@ -27,4 +30,11 @@ public class FragCount : MonoBehaviour
 
     }
 
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Piece") Physics2D.IgnoreCollision(collision.gameObject.GetComponent<PolygonCollider2D>(), gameObject.GetComponent<PolygonCollider2D>());
+
+
+    }
+    
 }

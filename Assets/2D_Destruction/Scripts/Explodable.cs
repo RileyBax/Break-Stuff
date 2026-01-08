@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using System;
+using Unity.Mathematics;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Explodable : MonoBehaviour
@@ -28,8 +30,10 @@ public class Explodable : MonoBehaviour
     /// <summary>
     /// Creates fragments if necessary and destroys original gameobject
     /// </summary>
-    public void explode(Vector2 prevVel)
+    public void explode(Vector2 prevVel, Boolean wall)
     {
+        PhysicsMaterial2D mat = new PhysicsMaterial2D();
+        mat.bounciness = 0.5f;
         //if fragments were not created before runtime then create them now
         if (fragments.Count == 0 && allowRuntimeFragmentation)
         {
@@ -42,7 +46,23 @@ public class Explodable : MonoBehaviour
             {
                 frag.transform.parent = null;
                 frag.SetActive(true);
-                frag.GetComponent<Rigidbody2D>().linearVelocity = prevVel;
+                frag.tag = "Piece";
+
+                if(wall){
+
+                    foreach (GameObject frag2 in fragments)
+                    {
+
+                        Physics2D.IgnoreCollision(frag.GetComponent<PolygonCollider2D>(), frag2.GetComponent<PolygonCollider2D>());
+
+                    }
+                    frag.GetComponent<Rigidbody2D>().linearVelocity = prevVel / 2;
+                    
+                    frag.GetComponent<Rigidbody2D>().sharedMaterial = mat;
+
+                }
+                else frag.GetComponent<Rigidbody2D>().linearVelocity = prevVel;
+
             }
         }
         //if fragments exist destroy the original

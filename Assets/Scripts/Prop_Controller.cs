@@ -1,4 +1,5 @@
 using System.Numerics;
+using Delaunay;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,7 +19,9 @@ public class Egg_Controller : MonoBehaviour
         transform.Rotate(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
         propRB = transform.gameObject.GetComponent<Rigidbody2D>();
         explodeable = transform.gameObject.GetComponent<Explodable>();
-        explodeable.extraPoints = Random.Range(2, 4);
+        explodeable.extraPoints = Random.Range(5, 10);
+        explodeable.shatterType = Explodable.ShatterType.Voronoi;
+
         explodeable.fragmentInEditor();
 
     }
@@ -45,7 +48,10 @@ public class Egg_Controller : MonoBehaviour
 
             }
 
-            explodeable.explode(prevVel);
+            if(collision.gameObject.tag == "Wall") explodeable.explode(prevVel, true);
+            else explodeable.explode(prevVel, false);
+
+            
 
         }
 
