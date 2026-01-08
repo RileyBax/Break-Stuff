@@ -17,6 +17,7 @@ public class Egg_Controller : MonoBehaviour
         transform.Rotate(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
         propRB = transform.gameObject.GetComponent<Rigidbody2D>();
         explodeable = transform.gameObject.GetComponent<Explodable>();
+        explodeable.extraPoints = Random.Range(2, 4);
 
     }
 
