@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,11 +11,15 @@ public class GameController : MonoBehaviour
     GameObject eggObject;
     [Range(0.0f, 10.0f)]
     public float fMulti = 1.5f;
+    public Sprite[] sprites;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
+        // load sprites
+        sprites = Resources.LoadAll<Sprite>("Sprites/Bathroom_Demo");
+
     }
 
     // Update is called once per frame
@@ -36,7 +41,13 @@ public class GameController : MonoBehaviour
                 //Debug.Log(eggRB);
 
             }
-            else Instantiate(egg).transform.position = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            else {
+                
+                GameObject temp = Instantiate(egg);
+                temp.transform.position = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                temp.SendMessage("setSprite", sprites[UnityEngine.Random.Range(0, 23)]);
+
+            }
 
         }
 

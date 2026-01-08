@@ -28,7 +28,30 @@ public class Explodable : MonoBehaviour
     /// <summary>
     /// Creates fragments if necessary and destroys original gameobject
     /// </summary>
-    public void explode()
+    public void explode(Vector2 prevVel)
+    {
+        //if fragments were not created before runtime then create them now
+        if (fragments.Count == 0 && allowRuntimeFragmentation)
+        {
+            generateFragments();
+        }
+        //otherwise unparent and activate them
+        else
+        {
+            foreach (GameObject frag in fragments)
+            {
+                frag.transform.parent = null;
+                frag.SetActive(true);
+                frag.GetComponent<Rigidbody2D>().linearVelocity = prevVel;
+            }
+        }
+        //if fragments exist destroy the original
+        if (fragments.Count > 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+        public void explode()
     {
         //if fragments were not created before runtime then create them now
         if (fragments.Count == 0 && allowRuntimeFragmentation)
@@ -106,6 +129,7 @@ public class Explodable : MonoBehaviour
         {
             if (p != null)
             {
+                p.AddComponent<FragCount>();
                 p.layer = LayerMask.NameToLayer(fragmentLayer);
                 p.GetComponent<Renderer>().sortingLayerName = sortingLayerName;
                 p.GetComponent<Renderer>().sortingOrder = orderInLayer;

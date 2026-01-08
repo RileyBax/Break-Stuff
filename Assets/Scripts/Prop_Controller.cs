@@ -1,3 +1,4 @@
+using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -5,10 +6,8 @@ public class Egg_Controller : MonoBehaviour
 {
 
     public Rigidbody2D propRB;
-    private float prevVel = 0.0f;
+    private UnityEngine.Vector2 prevVel;
     protected Explodable explodeable;
-    private bool exploded = false;
-    private float clearT = 0.0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,6 +17,7 @@ public class Egg_Controller : MonoBehaviour
         propRB = transform.gameObject.GetComponent<Rigidbody2D>();
         explodeable = transform.gameObject.GetComponent<Explodable>();
         explodeable.extraPoints = Random.Range(2, 4);
+        explodeable.fragmentInEditor();
 
     }
 
@@ -25,7 +25,7 @@ public class Egg_Controller : MonoBehaviour
     void Update()
     {
 
-        if(propRB) prevVel = propRB.linearVelocity.magnitude;
+        if(propRB) prevVel = propRB.linearVelocity;
 
 
     }
@@ -33,12 +33,19 @@ public class Egg_Controller : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         
-        if(prevVel > 5.0f) {
+        if(prevVel.magnitude > 5.0f) {
 
-            explodeable.fragmentInEditor();
-            explodeable.explode();
+            explodeable.explode(prevVel);
             
         }
+
+    }
+
+    public void setSprite(Sprite sprite)
+    {
+        
+        gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+        gameObject.GetComponent<BoxCollider2D>().size = new UnityEngine.Vector2(sprite.bounds.size.x, sprite.bounds.size.y);
 
     }
 
