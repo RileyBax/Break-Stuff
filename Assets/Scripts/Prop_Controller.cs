@@ -32,6 +32,8 @@ public class Egg_Controller : MonoBehaviour
 
         if(propRB) prevVel = propRB.linearVelocity;
 
+        if(transform.position.y < -10) Destroy(gameObject);
+
 
     }
 
@@ -51,7 +53,7 @@ public class Egg_Controller : MonoBehaviour
             if(collision.gameObject.tag == "Wall") explodeable.explode(prevVel, true);
             else explodeable.explode(prevVel, false);
 
-            
+            // TODO: combo meter, more breaks in rapid succession = increased coins
 
         }
         else if(collision.gameObject.tag == "Piece") Physics2D.IgnoreCollision(collision.gameObject.GetComponent<PolygonCollider2D>(), gameObject.GetComponent<BoxCollider2D>());

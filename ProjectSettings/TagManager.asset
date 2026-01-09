@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Piece
   - Wall
+  - Shop Item
   layers:
   - Default
   - TransparentFX

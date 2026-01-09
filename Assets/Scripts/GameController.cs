@@ -11,11 +11,12 @@ public class GameController : MonoBehaviour
     public GameObject egg;
     Rigidbody2D eggRB;
     GameObject eggObject;
-    public float fMulti = 1.5f;
+    private float fMulti = 1.5f;
     public Sprite[] sprites;
     public int score = 0;
     public TextMeshProUGUI scoreText;
     public GameObject propSpawner;
+    public bool debugSpawn = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -43,10 +44,11 @@ public class GameController : MonoBehaviour
 
                 eggRB = hit.collider.gameObject.GetComponent<Rigidbody2D>();
                 eggObject = hit.collider.gameObject;
-                //Debug.Log(eggRB);
+                
+                if(hit.collider.tag == "Shop Item") hit.collider.SendMessage("OnClick");
 
             }
-            else {
+            else if(debugSpawn) {
                 
                 GameObject temp = Instantiate(egg);
                 temp.transform.position = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -91,7 +93,7 @@ public class GameController : MonoBehaviour
 
     }
 
-    void addScore(int amount)
+    public void addScore(int amount)
     {
         
         score += amount;

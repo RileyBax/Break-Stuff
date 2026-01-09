@@ -14,7 +14,7 @@ public class Shop_Script : MonoBehaviour
     {
 
         newStoreItem();
-
+        
     }
 
     // Update is called once per frame
@@ -35,8 +35,8 @@ public class Shop_Script : MonoBehaviour
 
         for (int i = 0; i < shopList.Count; i++)
         {
-            
-            float xTarget = 1.75f - (1.75f * i);
+
+            float xTarget = 1.25f - (1.25f * i);
 
             if(shopList[i].transform.position.x < xTarget) shopList[i].transform.Translate(Vector2.right * Time.deltaTime * 2.0f, Space.World);
 
@@ -51,6 +51,13 @@ public class Shop_Script : MonoBehaviour
         shopItem.transform.position -= new Vector3(8, 0, 0);
         
         shopList.Add(shopItem);
+
+    }
+
+    void removeItem(GameObject item)
+    {
+        
+        shopList.Remove(item);
 
     }
 }

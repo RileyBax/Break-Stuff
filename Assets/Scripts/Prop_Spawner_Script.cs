@@ -42,6 +42,20 @@ public class Prop_Spawner_Script : MonoBehaviour
 
     }
 
+    void spawnProp(int spriteNum)
+    {
+        
+        // create random vector2 then add force to instantiated prop
+        Vector2 force = new Vector2(transform.position.x - 8, transform.position.y + 5);
+
+        GameObject newProp = Instantiate(prop);
+
+        newProp.SendMessage("setSprite", sprites[spriteNum]);
+        newProp.transform.position = transform.position;
+        newProp.GetComponent<Rigidbody2D>().AddForce(force * Random.Range(40, 60));
+
+    }
+
     void setSprites(Sprite[] sprites)
     {
         
