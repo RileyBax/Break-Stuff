@@ -8,9 +8,9 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
 
-    public GameObject egg;
-    Rigidbody2D eggRB;
-    GameObject eggObject;
+    public GameObject prop;
+    Rigidbody2D propRB;
+    GameObject propObject;
     private float fMulti = 1.5f;
     public Sprite[] sprites;
     public int score = 0;
@@ -44,15 +44,15 @@ public class GameController : MonoBehaviour
                 // Drag egg around
                 //GameObject egg = hit.collider.gameObject.transform.parent.gameObject;
 
-                eggRB = hit.collider.gameObject.GetComponent<Rigidbody2D>();
-                eggObject = hit.collider.gameObject;
+                propRB = hit.collider.gameObject.GetComponent<Rigidbody2D>();
+                propObject = hit.collider.gameObject;
                 
                 if(hit.collider.tag == "Shop Item") hit.collider.SendMessage("OnClick");
 
             }
             else if(debugSpawn) {
                 
-                GameObject temp = Instantiate(egg);
+                GameObject temp = Instantiate(prop);
                 temp.transform.position = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 temp.SendMessage("setSprite", sprites[UnityEngine.Random.Range(0, sprites.Length - 1)]);
 
@@ -63,11 +63,11 @@ public class GameController : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             
-            if(eggRB){
+            if(propRB){
 
-                Vector2 force = (((Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2) eggObject.transform.position) * 0.8f);
-                eggRB.gravityScale = 0;
-                eggRB.AddForce(force * fMulti); // check if egg object is near mouse pos, dont add force if true
+                Vector2 force = (((Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2) propObject.transform.position) * 0.8f);
+                propRB.gravityScale = 0;
+                propRB.AddForce(force * fMulti); // check if egg object is near mouse pos, dont add force if true
 
             }
 
@@ -76,20 +76,20 @@ public class GameController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             
-            if(eggRB){
+            if(propRB){
 
-                eggRB.gravityScale = 1;
-                eggRB = null;
-                eggObject = null;
+                propRB.gravityScale = 1;
+                propRB = null;
+                propObject = null;
 
             }
 
         }
 
-        if (eggRB)
+        if (propRB)
         {
             
-            eggRB.linearVelocity *= new Vector2(0.999f, 0.999f);
+            propRB.linearVelocity *= new Vector2(0.999f, 0.999f);
 
         }
 
