@@ -28,7 +28,7 @@ public class FragCount : MonoBehaviour
         }
         else Destroy(transform.gameObject);
 
-        if(timer > 0.5f) gameObject.GetComponent<Rigidbody2D>().sharedMaterial = null;
+        if(timer > 0.1f) gameObject.GetComponent<Rigidbody2D>().sharedMaterial = null;
 
     }
 

@@ -22,6 +22,7 @@ public class Shop_Item_Script : MonoBehaviour{
         propSpawner = GameObject.Find("Prop Spawner");
         cost = Random.Range(1, 5);
         spriteRand = Random.Range(0, gc.sprites.Length-1);
+        //Debug.Log("Sprite Created: " + spriteRand);
 
         for (int i = 0; i < cost; i++)
         {
@@ -47,7 +48,8 @@ public class Shop_Item_Script : MonoBehaviour{
         if(gc.score >= cost){
 
             gc.addScore(cost * -1);
-            propSpawner.SendMessage("spawnProp", spriteRand);
+            Debug.Log(spriteRand);
+            propSpawner.SendMessage("spawnPropSprite", spriteRand);
             shop.SendMessage("removeItem", gameObject);
             Destroy(gameObject);
         

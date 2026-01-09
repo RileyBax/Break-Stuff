@@ -16,7 +16,7 @@ public class Coin_Script : MonoBehaviour
     {
 
         // spawn on prop break -> float upwards slow -> pause -> move to corner?
-        target = new Rect(UnityEngine.Random.Range(transform.position.x - 0.4f, transform.position.x - 0.2f), UnityEngine.Random.Range(transform.position.y + 1, transform.position.x + 1.5f), 0.8f, 0.5f);
+        target = new Rect(UnityEngine.Random.Range(transform.position.x - 1.0f, transform.position.x + 1.0f), UnityEngine.Random.Range(transform.position.y + 1.0f, transform.position.x + 2.0f), 1.0f, 0.5f);
         rb = gameObject.GetComponent<Rigidbody2D>();
         world = GameObject.Find("World");
 

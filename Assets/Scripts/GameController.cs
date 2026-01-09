@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public GameObject propSpawner;
     public bool debugSpawn = false;
+    private float multiTimer = 0.0f;
+    public int multiP = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -91,6 +93,15 @@ public class GameController : MonoBehaviour
 
         }
 
+        if(multiTimer < 10.0f) multiTimer += Time.deltaTime;
+        else
+        {
+            
+            multiP = 1;
+            multiTimer = 0.0f;
+
+        }
+
     }
 
     public void addScore(int amount)
@@ -98,6 +109,14 @@ public class GameController : MonoBehaviour
         
         score += amount;
         scoreText.text = score.ToString();
+
+    }
+
+    public void setMulti(int amount)
+    {
+        
+        multiP += amount;
+        multiTimer = 0.0f;
 
     }
 }

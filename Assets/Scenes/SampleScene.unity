@@ -590,7 +590,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prop: {fileID: 3535382997527544053, guid: bd5dbd19da5ed3546ac1ddd33a43f7d3, type: 3}
+  orderTimer: 0
   spawnTimer: 0
+  orders: 
 --- !u!4 &566380372
 Transform:
   m_ObjectHideFlags: 0
@@ -1202,6 +1204,7 @@ MonoBehaviour:
   scoreText: {fileID: 1545747564}
   propSpawner: {fileID: 566380370}
   debugSpawn: 0
+  multiP: 1
 --- !u!4 &1333605546
 Transform:
   m_ObjectHideFlags: 0
@@ -1529,7 +1532,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 121.72938, w: 0}
+  m_margin: {x: -51.136467, y: 0, z: 74.854195, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

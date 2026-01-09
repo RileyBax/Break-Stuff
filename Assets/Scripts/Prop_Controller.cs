@@ -11,18 +11,17 @@ public class Egg_Controller : MonoBehaviour
     protected Explodable explodeable;
     public GameObject coin;
     private bool coinSpawned = false;
+    public GameObject gc;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
-        transform.Rotate(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
-        propRB = transform.gameObject.GetComponent<Rigidbody2D>();
-        explodeable = transform.gameObject.GetComponent<Explodable>();
-        explodeable.extraPoints = Random.Range(5, 10);
-        explodeable.shatterType = Explodable.ShatterType.Voronoi;
+        gc = GameObject.Find("World");
 
-        explodeable.fragmentInEditor();
+        transform.Rotate(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+        
+        initiateProp();
 
     }
 
@@ -37,6 +36,18 @@ public class Egg_Controller : MonoBehaviour
 
     }
 
+    void initiateProp()
+    {
+        
+        propRB = transform.gameObject.GetComponent<Rigidbody2D>();
+        explodeable = transform.gameObject.GetComponent<Explodable>();
+        explodeable.extraPoints = Random.Range(5, 10);
+        explodeable.shatterType = Explodable.ShatterType.Voronoi;
+
+        explodeable.fragmentInEditor();
+
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         
@@ -45,10 +56,19 @@ public class Egg_Controller : MonoBehaviour
             if (!coinSpawned)
             {
                 
-                Instantiate(coin).transform.position = transform.position;
+                for(int i = 0; i < gc.GetComponent<GameController>().multiP; i++)
+                {
+                    
+                    GameObject tempPrefab = Instantiate(coin);
+                    tempPrefab.transform.position = transform.position;
+
+                }
+
                 coinSpawned = true;
 
             }
+
+            gc.SendMessage("setMulti", 1);
 
             if(collision.gameObject.tag == "Wall") explodeable.explode(prevVel, true);
             else explodeable.explode(prevVel, false);
@@ -63,8 +83,12 @@ public class Egg_Controller : MonoBehaviour
     public void setSprite(Sprite sprite)
     {
         
+        //Debug.Log("Prop: " + sprite);
+
         gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
         gameObject.GetComponent<BoxCollider2D>().size = new UnityEngine.Vector2(sprite.bounds.size.x, sprite.bounds.size.y);
+
+        //initiateProp();
 
     }
 
