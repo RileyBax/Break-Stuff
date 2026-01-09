@@ -26,7 +26,7 @@ public class Shop_Item_Script : MonoBehaviour{
         for (int i = 0; i < cost; i++)
         {
             
-            Instantiate(coin, transform).transform.position += new Vector3(i / 5.0f - 1.75f, 4.75f, -i);
+            Instantiate(coin, transform).transform.position += new Vector3(i / 5.0f - 1.75f, 4.75f, -1);
 
         }
 
