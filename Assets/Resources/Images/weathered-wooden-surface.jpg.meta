@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      weathered-wooden-surface_0: -5840780694773919059
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

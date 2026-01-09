@@ -1,6 +1,4 @@
 using System;
-using UnityEditor.Animations;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public class Coin_Script : MonoBehaviour
