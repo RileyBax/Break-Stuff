@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     public Sprite[] sprites;
     public int score = 0;
     public TextMeshProUGUI scoreText;
+    public GameObject propSpawner;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,6 +23,7 @@ public class GameController : MonoBehaviour
         
         // load sprites
         sprites = Resources.LoadAll<Sprite>("Sprites/Bathroom_Demo");
+        propSpawner.SendMessage("setSprites", sprites);
 
     }
 
@@ -48,7 +50,7 @@ public class GameController : MonoBehaviour
                 
                 GameObject temp = Instantiate(egg);
                 temp.transform.position = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                temp.SendMessage("setSprite", sprites[UnityEngine.Random.Range(0, 23)]);
+                temp.SendMessage("setSprite", sprites[UnityEngine.Random.Range(0, sprites.Length - 1)]);
 
             }
 

@@ -38,7 +38,7 @@ public class Egg_Controller : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         
-        if(prevVel.magnitude > 5.0f) {
+        if(prevVel.magnitude > 8.0f) {
 
             if (!coinSpawned)
             {
@@ -54,6 +54,7 @@ public class Egg_Controller : MonoBehaviour
             
 
         }
+        else if(collision.gameObject.tag == "Piece") Physics2D.IgnoreCollision(collision.gameObject.GetComponent<PolygonCollider2D>(), gameObject.GetComponent<BoxCollider2D>());
 
     }
 
