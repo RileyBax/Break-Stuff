@@ -47,6 +47,7 @@ public class Explodable : MonoBehaviour
                 frag.transform.parent = null;
                 frag.SetActive(true);
                 frag.tag = "Piece";
+                frag.layer = 6;
 
                 if(wall){
 

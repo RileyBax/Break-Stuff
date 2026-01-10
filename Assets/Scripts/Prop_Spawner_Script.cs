@@ -10,6 +10,7 @@ public class Prop_Spawner_Script : MonoBehaviour
     public float orderTimer = 0.0f;
     public float spawnTimer = 0.0f;
     public List<int> orders = new List<int>();
+    private bool firstSpawn = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,6 +21,8 @@ public class Prop_Spawner_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(firstSpawn)spawnPropSprite(UnityEngine.Random.Range(0, sprites.Length-1));
 
         if(orders.Count > 1 && orderTimer >= 2.5f)
         {

@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using Unity.VisualScripting;
 using Unity.VisualScripting.AssemblyQualifiedNameParser;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -11,14 +14,18 @@ public class GameController : MonoBehaviour
     public GameObject prop;
     Rigidbody2D propRB;
     GameObject propObject;
-    private float fMulti = 1.5f;
+    private float fMulti = 5f;
     public Sprite[] sprites;
     public int score = 0;
     public TextMeshProUGUI scoreText;
     public GameObject propSpawner;
     public bool debugSpawn = false;
-    private float multiTimer = 0.0f;
-    public int multiP = 1;
+    public float multiTimer = 0.0f;
+    private int multiP = 0;
+    public TextMeshProUGUI multiText;
+    public GameObject multiBar;
+    private float multiBarFull;
+    public GameObject multiBox;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +34,10 @@ public class GameController : MonoBehaviour
         // load sprites
         sprites = Resources.LoadAll<Sprite>("Sprites/Bathroom_Demo");
         propSpawner.SendMessage("setSprites", sprites);
+        multiBarFull = multiBar.GetComponent<RectTransform>().sizeDelta.x;
+
+        multiBar.transform.position = multiBox.transform.position - new Vector3(0, 0.2f, 0);;
+        multiText.transform.position = multiBox.transform.position + new Vector3(0, 0.2f, 0);
 
     }
 
@@ -89,7 +100,7 @@ public class GameController : MonoBehaviour
         if (propRB)
         {
             
-            propRB.linearVelocity *= new Vector2(0.999f, 0.999f);
+            propRB.linearVelocity *= new Vector2(0.99f, 0.99f);
 
         }
 
@@ -97,10 +108,34 @@ public class GameController : MonoBehaviour
         else
         {
             
-            multiP = 1;
+            multiP = 0;
             multiTimer = 0.0f;
 
         }
+
+        if(multiP > 1)
+        {
+            
+            String temp = multiP + "x";
+
+            for (int i = 0; i < multiP; i++)
+            {
+                
+                temp += "!";
+
+            }
+
+            multiText.text = temp;
+
+            if(!multiBar.activeSelf) multiBar.SetActive(true);
+            multiBar.GetComponent<RectTransform>().sizeDelta = new Vector2(multiBarFull * (10.0f - multiTimer) / 10.0f, 30);
+
+            float sinWave = (float) Mathf.Sin(multiTimer * (multiP / 2.0f)) * (multiP / 2.0f);
+
+            multiBox.transform.localRotation = Quaternion.Euler(0, 0, sinWave);
+
+        }
+        else multiText.text = "";
 
     }
 
@@ -117,6 +152,13 @@ public class GameController : MonoBehaviour
         
         multiP += amount;
         multiTimer = 0.0f;
+
+    }
+
+    public int getMultiP()
+    {
+        
+        return multiP;
 
     }
 }

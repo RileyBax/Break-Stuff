@@ -56,7 +56,7 @@ public class Egg_Controller : MonoBehaviour
             if (!coinSpawned)
             {
                 
-                for(int i = 0; i < gc.GetComponent<GameController>().multiP; i++)
+                for(int i = 0; i < gc.GetComponent<GameController>().getMultiP() + 1; i++)
                 {
                     
                     GameObject tempPrefab = Instantiate(coin);

@@ -47,7 +47,6 @@ public class Shop_Item_Script : MonoBehaviour{
         if(gc.score >= cost){
 
             gc.addScore(cost * -1);
-            Debug.Log(spriteRand);
             propSpawner.SendMessage("spawnPropSprite", spriteRand);
             shop.SendMessage("removeItem", gameObject);
             Destroy(gameObject);

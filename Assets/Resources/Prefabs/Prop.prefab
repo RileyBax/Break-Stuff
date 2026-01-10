@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3540220652369107471}
   - component: {fileID: 8331820467316486459}
   - component: {fileID: 882215188072257440}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Prop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   propRB: {fileID: 0}
   coin: {fileID: 1082887098648623800, guid: 357cafb35b363af439c96182ce8fc224, type: 3}
+  gc: {fileID: 0}
 --- !u!114 &882215188072257440
 MonoBehaviour:
   m_ObjectHideFlags: 0
