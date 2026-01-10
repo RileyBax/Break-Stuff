@@ -46,11 +46,14 @@ public class Shop_Item_Script : MonoBehaviour{
 
         if(gc.score >= cost){
 
+            gc.SendMessage("playBuy");
+
             gc.addScore(cost * -1);
             propSpawner.SendMessage("spawnPropSprite", spriteRand);
             shop.SendMessage("removeItem", gameObject);
             Destroy(gameObject);
         
         }
+        else gc.SendMessage("playWrong");
     }
 }

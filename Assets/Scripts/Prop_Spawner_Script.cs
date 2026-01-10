@@ -11,20 +11,27 @@ public class Prop_Spawner_Script : MonoBehaviour
     public float spawnTimer = 0.0f;
     public List<int> orders = new List<int>();
     private bool firstSpawn = true;
+    public GameObject gc;
+    private GameController gcScript;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
+        gcScript = gc.GetComponent<GameController>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if(firstSpawn)spawnPropSprite(UnityEngine.Random.Range(0, sprites.Length-1));
+        if(firstSpawn) {
+            spawnPropSprite(UnityEngine.Random.Range(0, sprites.Length-1));
+            firstSpawn = false;
+        }
 
-        if(orders.Count > 1 && orderTimer >= 2.5f)
+        if(orders.Count > 1 && orderTimer >= Math.Max(1.0f, 5.0f - gcScript.getMultiP() / 2.0f))
         {
             
             // spawn prop
@@ -54,7 +61,7 @@ public class Prop_Spawner_Script : MonoBehaviour
         newProp.SendMessage("setSprite", sprites[orders[0]]);
         orders.Remove(orders[0]);
         newProp.transform.position = transform.position;
-        newProp.GetComponent<Rigidbody2D>().AddForce(force * UnityEngine.Random.Range(40, 60));
+        newProp.GetComponent<Rigidbody2D>().AddForce(force * UnityEngine.Random.Range(50, 60));
 
         orderTimer = 0.0f;
 

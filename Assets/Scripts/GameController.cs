@@ -1,12 +1,6 @@
 using System;
-using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
-using Unity.VisualScripting;
-using Unity.VisualScripting.AssemblyQualifiedNameParser;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -21,23 +15,31 @@ public class GameController : MonoBehaviour
     public GameObject propSpawner;
     public bool debugSpawn = false;
     public float multiTimer = 0.0f;
+    public const float multiTimerMax = 5.0f;
     private int multiP = 0;
     public TextMeshProUGUI multiText;
     public GameObject multiBar;
     private float multiBarFull;
     public GameObject multiBox;
+    public AudioSource soundController;
+    public AudioClip coinSound;
+    public AudioClip[] crashSound = new AudioClip[4];
+    public AudioClip buySound;
+    public AudioClip wrongSound;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
         // load sprites
-        sprites = Resources.LoadAll<Sprite>("Sprites/Bathroom_Demo");
+        sprites = Resources.LoadAll<Sprite>("Sprites/sprites");
         propSpawner.SendMessage("setSprites", sprites);
         multiBarFull = multiBar.GetComponent<RectTransform>().sizeDelta.x;
 
         multiBar.transform.position = multiBox.transform.position - new Vector3(0, 0.2f, 0);;
         multiText.transform.position = multiBox.transform.position + new Vector3(0, 0.2f, 0);
+
+
 
     }
 
@@ -104,7 +106,12 @@ public class GameController : MonoBehaviour
 
         }
 
-        if(multiTimer < 10.0f) multiTimer += Time.deltaTime;
+        if(multiTimer < multiTimerMax) {
+
+            if(multiP > 10) multiTimer += Time.deltaTime * (multiP / 10.0f);
+            else multiTimer += Time.deltaTime;
+            
+        }
         else
         {
             
@@ -128,7 +135,7 @@ public class GameController : MonoBehaviour
             multiText.text = temp;
 
             if(!multiBar.activeSelf) multiBar.SetActive(true);
-            multiBar.GetComponent<RectTransform>().sizeDelta = new Vector2(multiBarFull * (10.0f - multiTimer) / 10.0f, 30);
+            multiBar.GetComponent<RectTransform>().sizeDelta = new Vector2(multiBarFull * (multiTimerMax - multiTimer) * 2 / 10.0f, 30);
 
             float sinWave = (float) Mathf.Sin(multiTimer * (multiP / 2.0f)) * (multiP / 2.0f);
 
@@ -145,6 +152,8 @@ public class GameController : MonoBehaviour
         score += amount;
         scoreText.text = score.ToString();
 
+        if(amount > 0) soundController.PlayOneShot(coinSound);
+
     }
 
     public void setMulti(int amount)
@@ -159,6 +168,27 @@ public class GameController : MonoBehaviour
     {
         
         return multiP;
+
+    }
+
+    public void playBreak()
+    {
+        
+        soundController.PlayOneShot(crashSound[UnityEngine.Random.Range(1, crashSound.Length-1)]);
+
+    }
+
+    public void playBuy()
+    {
+        
+          soundController.PlayOneShot(buySound);
+
+    }
+
+    public void playWrong()
+    {
+        
+          soundController.PlayOneShot(wrongSound);
 
     }
 }

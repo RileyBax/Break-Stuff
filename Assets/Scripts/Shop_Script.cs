@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -8,12 +9,15 @@ public class Shop_Script : MonoBehaviour
     public List<GameObject> shopList = new List<GameObject>();
     private float newItemTimer = 0.0f;
     public GameObject shopItemPrefab;
+    public GameObject gc;
+    private GameController gcScript;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
         newStoreItem();
+        gcScript = gc.GetComponent<GameController>();
         
     }
 
@@ -22,14 +26,14 @@ public class Shop_Script : MonoBehaviour
     {
 
         // create shop items every few secounds, add to shop list, slide item from left -> right side of shop
-        if(newItemTimer <= 5.0f) newItemTimer += Time.deltaTime;
+        if(newItemTimer <= Math.Max(1.0f, 5.0f - gcScript.getMultiP())) newItemTimer += Time.deltaTime;
         else
         {
             
             newItemTimer = 0.0f;
 
             // spawn new item
-            if(shopList.Count < 4) newStoreItem();
+            if(shopList.Count < 4 + gcScript.getMultiP()) newStoreItem();
 
         }
 

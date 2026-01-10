@@ -1,4 +1,5 @@
-using System.Numerics;
+using System;
+using System.Collections.Generic;
 using Delaunay;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class Egg_Controller : MonoBehaviour
 
         gc = GameObject.Find("World");
 
-        transform.Rotate(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+        transform.Rotate(UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10));
         
         initiateProp();
 
@@ -41,7 +42,7 @@ public class Egg_Controller : MonoBehaviour
         
         propRB = transform.gameObject.GetComponent<Rigidbody2D>();
         explodeable = transform.gameObject.GetComponent<Explodable>();
-        explodeable.extraPoints = Random.Range(5, 10);
+        explodeable.extraPoints = UnityEngine.Random.Range(5, 10);
         explodeable.shatterType = Explodable.ShatterType.Voronoi;
 
         explodeable.fragmentInEditor();
@@ -52,6 +53,8 @@ public class Egg_Controller : MonoBehaviour
     {
         
         if(prevVel.magnitude > 8.0f) {
+
+            gc.SendMessage("playBreak");
 
             if (!coinSpawned)
             {
@@ -72,8 +75,6 @@ public class Egg_Controller : MonoBehaviour
 
             if(collision.gameObject.tag == "Wall") explodeable.explode(prevVel, true);
             else explodeable.explode(prevVel, false);
-
-            // TODO: combo meter, more breaks in rapid succession = increased coins
 
         }
         else if(collision.gameObject.tag == "Piece") Physics2D.IgnoreCollision(collision.gameObject.GetComponent<PolygonCollider2D>(), gameObject.GetComponent<BoxCollider2D>());
